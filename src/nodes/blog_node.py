@@ -38,13 +38,15 @@ class BlogNode:
 
             return {"blog": {"title":state["blog"]["title"], "content": response.content}}
 
+
     def translation(self, state:BlogState):
         """
         Translate the content to the specified language.
         """
         
         translation_prompt ="""
-        Translate the following content into {current_language}.
+        Remove irrelevant part from the gven content. Then translate the remaining part into {current_language}.
+        - Try to translate full content but adjust words according to llm capabilities.
         - Maintain the original tone, style, and formatting.
         - Adapt cultural references and idioms to be apprpriate for {current_language}.
 
@@ -57,7 +59,7 @@ class BlogNode:
         ]
     
         translation_content = self.llm.with_structured_output(Blog).invoke(messages)
-        return {"blog": {"translated_content": translation_content.content}}
+        return {"blog": {"translated_content": translation_content}}
 
     def route(self, state:BlogState):
         return {"current_language":state["current_language"]}
