@@ -12,4 +12,6 @@ wheels/
 # My Files
 request.json
 .env
-uv.lock.env 
+uv.lock
+example.ipynb
+
